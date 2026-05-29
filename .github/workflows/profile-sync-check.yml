@@ -1,0 +1,98 @@
+name: Profile sync check
+
+# Nags (does not auto-edit) when the org profile README falls out of sync with
+# the org's public repos. Preserves the hand-written descriptions and the
+# MCP/Agent grouping in profile/README.md — a human still writes the row, this
+# just opens a tracking issue so a new public repo never gets silently missed.
+
+on:
+  schedule:
+    - cron: "0 14 * * 1" # Mondays 14:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      ORG: sailingnaturali
+      README: profile/README.md
+      TITLE: "Org profile README out of sync"
+      # Public repos that intentionally do NOT belong in the profile listing.
+      IGNORE: ".github"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Diff public repos against profile README
+        run: |
+          set -euo pipefail
+
+          # Public, non-archived repos in the org.
+          mapfile -t PUBLIC < <(gh api --paginate \
+            "/orgs/$ORG/repos?type=public&per_page=100" \
+            --jq '.[] | select(.archived==false) | .name' | sort -u)
+
+          # Repo names currently linked from the profile README.
+          mapfile -t LINKED < <(grep -oE "github\.com/$ORG/[A-Za-z0-9._-]+" "$README" \
+            | sed "s#github.com/$ORG/##" | sort -u)
+
+          in_list() { local n; for n in "$@"; do [ "$n" = "$NEEDLE" ] && return 0; done; return 1; }
+
+          missing=()
+          for repo in "${PUBLIC[@]}"; do
+            case " $IGNORE " in *" $repo "*) continue ;; esac
+            NEEDLE="$repo"; in_list "${LINKED[@]:-}" || missing+=("$repo")
+          done
+
+          stale=()
+          for repo in "${LINKED[@]:-}"; do
+            case " $IGNORE " in *" $repo "*) continue ;; esac
+            NEEDLE="$repo"; in_list "${PUBLIC[@]}" || stale+=("$repo")
+          done
+
+          {
+            echo "missing<<EOF"; printf '%s\n' "${missing[@]:-}"; echo "EOF"
+            echo "stale<<EOF";   printf '%s\n' "${stale[@]:-}";   echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+        id: diff
+
+      - name: Open, update, or close the tracking issue
+        run: |
+          set -euo pipefail
+
+          MISSING="$(printf '%s' "${{ steps.diff.outputs.missing }}" | sed '/^$/d')"
+          STALE="$(printf '%s' "${{ steps.diff.outputs.stale }}" | sed '/^$/d')"
+
+          existing="$(gh issue list --state open --json number,title \
+            --jq ".[] | select(.title==\"$TITLE\") | .number" | head -1)"
+
+          if [ -z "$MISSING" ] && [ -z "$STALE" ]; then
+            echo "Profile in sync with public repos."
+            if [ -n "$existing" ]; then
+              gh issue close "$existing" \
+                --comment "✅ Profile back in sync — closing automatically."
+            fi
+            exit 0
+          fi
+
+          body="The org profile (\`$README\`) is out of sync with the org's public repos.\n"
+          if [ -n "$MISSING" ]; then
+            body="${body}\n**Public repos missing from the profile** — add a curated row in \`profile/README.md\`:\n"
+            while IFS= read -r r; do body="${body}- [ ] \`$r\` — https://github.com/$ORG/$r\n"; done <<< "$MISSING"
+          fi
+          if [ -n "$STALE" ]; then
+            body="${body}\n**Linked in the profile but no longer public** — remove or fix the row:\n"
+            while IFS= read -r r; do body="${body}- [ ] \`$r\`\n"; done <<< "$STALE"
+          fi
+          body="${body}\n_Filed automatically by \`profile-sync-check\`. Ignored repos: \`$IGNORE\`._"
+
+          if [ -n "$existing" ]; then
+            printf '%b' "$body" | gh issue comment "$existing" --body-file -
+          else
+            printf '%b' "$body" | gh issue create --title "$TITLE" --body-file -
+          fi
