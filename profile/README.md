@@ -20,13 +20,67 @@ On-boat AI agent system — Navigator, Engineer, Logbook — built on local infe
 | [weather-mcp](https://github.com/sailingnaturali/weather-mcp) | Marine wind, swell, and buoy observations — Open-Meteo + Stormglass + NDBC |
 | [tide-mcp](https://github.com/sailingnaturali/tide-mcp) | Tidal gate slack windows for PNW passages — CHS (BC) + NOAA CO-OPS (US) |
 | [pilotbook-mcp](https://github.com/sailingnaturali/pilotbook-mcp) | Rank the most comfortable overnight anchorage by joining pilot-book exposure against the forecast |
+| [colregs-mcp](https://github.com/sailingnaturali/colregs-mcp) | Navigation rules of the road — resolve the regime by GPS, look up rules, and check lights/shapes compliance |
 | [logbook-mcp](https://github.com/sailingnaturali/logbook-mcp) | Capture marked moments and sea-day entries to a local SQLite logbook |
+
+### Vaults
+
+Knowledge bases the MCP servers read from.
+
+| Repo | What it holds |
+|------|-------------|
+| [colregs-vault](https://github.com/sailingnaturali/colregs-vault) | Navigation-rules content for colregs-mcp — rule prose, a curated requirements decision table, and PNW regime polygons. Public because the sources are reproducible public-domain law |
+| `pilotbook-vault` *(private)* | Anchorage knowledge for pilotbook-mcp — 673 anchorages across 7 SalishSeaPilot books, with exposed-sector data and source page back-links. Kept private: the source pilot books are copyrighted |
 
 ### Agents
 
 | Repo | What it does |
 |------|-------------|
 | [naturali-agents](https://github.com/sailingnaturali/naturali-agents) | Hermes Agent skills for Navigator, Engineer, and Logbook — prompts, bridge scripts, and HA voice integration |
+
+---
+
+## How it fits together
+
+Three replaceable layers. An agent reads vessel + environment data through MCP
+servers, reasons over it, and speaks back through Home Assistant.
+
+```
+  Interaction        Home Assistant (Pi 5)
+                       voice in ──MQTT──▶  │   ◀──MQTT── Piper TTS out
+                                           ▼
+  Agent runtime      Hermes Agent (Mac Studio / Mac mini)
+                       Hermes 3 8B local via Ollama  +  Claude API
+                                           │
+                       ┌───────────────────┼───────────────────┐
+  Tool surface         ▼          ▼         ▼         ▼          ▼
+                   signalk    weather     tide   pilotbook   colregs   logbook
+                    -mcp       -mcp       -mcp     -mcp        -mcp      -mcp
+                      │          │          │        │           │         │
+  Data / vaults    SignalK   Open-Meteo  CHS +   pilotbook-  colregs-   sqlite
+                    bus       NDBC        NOAA    vault       vault
+```
+
+Each MCP server runs standalone and is independently useful — point your own agent
+at any one of them. The vaults are plain Markdown/GeoJSON the servers read at
+startup (`PILOTBOOK_VAULT_PATH`, `COLREGS_VAULT_PATH`).
+
+## Getting started
+
+Start at **[naturali-agents](https://github.com/sailingnaturali/naturali-agents)** — it
+wires the MCP servers into a working agent and ships a mock SignalK server, so the whole
+loop runs on a laptop with no boat:
+
+```bash
+git clone https://github.com/sailingnaturali/naturali-agents
+cd naturali-agents
+python dev/mock-signalk.py            # serves a Boundary Pass scenario on :8765
+export SIGNALK_URL=http://localhost:8765
+hermes chat -s naturali/navigator     # ask the Navigator anything
+```
+
+Each repo's README carries its own install, env vars, and tool surface. Every MCP
+server is a `uv`-runnable Python package with its own test suite.
 
 ---
 
