@@ -16,12 +16,13 @@ On-boat AI agent system — Navigator, Engineer, Logbook — built on local infe
 
 | Repo | What it does |
 |------|-------------|
-| [signalk-mcp](https://github.com/sailingnaturali/signalk-mcp) | Read live vessel data from SignalK — wind, position, battery, route |
+| [signalk-mcp](https://github.com/sailingnaturali/signalk-mcp) | Read live vessel data from SignalK — wind, depth, position, battery, route — with path discovery and under-keel clearance |
 | [weather-mcp](https://github.com/sailingnaturali/weather-mcp) | Marine wind, swell, and buoy observations — Open-Meteo + Stormglass + NDBC |
 | [tide-mcp](https://github.com/sailingnaturali/tide-mcp) | Tidal gate slack windows for PNW passages — CHS (BC) + NOAA CO-OPS (US) |
 | [pilotbook-mcp](https://github.com/sailingnaturali/pilotbook-mcp) | Rank the most comfortable overnight anchorage by joining pilot-book exposure against the forecast |
 | [colregs-mcp](https://github.com/sailingnaturali/colregs-mcp) | Navigation rules of the road — resolve the regime by GPS, look up rules, and check lights/shapes compliance |
 | [logbook-mcp](https://github.com/sailingnaturali/logbook-mcp) | Capture marked moments and sea-day entries to a local SQLite logbook |
+| [vessel-knowledge-mcp](https://github.com/sailingnaturali/vessel-knowledge-mcp) | Turn equipment manuals into alarm zones and equipment lookups — ingests PDFs into a card vault, pushes zone bands into SignalK so it raises notifications autonomously, then explains them in plain language |
 
 ### Vaults
 
@@ -31,6 +32,7 @@ Knowledge bases the MCP servers read from.
 |------|-------------|
 | [colregs-vault](https://github.com/sailingnaturali/colregs-vault) | Navigation-rules content for colregs-mcp — rule prose, a curated requirements decision table, and PNW regime polygons. Public because the sources are reproducible public-domain law |
 | `pilotbook-vault` *(private)* | Anchorage knowledge for pilotbook-mcp — 673 anchorages across 7 SalishSeaPilot books, with exposed-sector data and source page back-links. Kept private: the source pilot books are copyrighted |
+| `vessel-knowledge-vault` *(private)* | Equipment cards for vessel-knowledge-mcp — per-make/model spec cards extracted from manuals (Bellmarine drives, Victron Cerbo, watermaker), with zone bands in SignalK canonical SI units. Kept private: the source manuals are copyrighted |
 
 ### Agents
 
@@ -52,18 +54,21 @@ servers, reasons over it, and speaks back through Home Assistant.
   Agent runtime      Hermes Agent (Mac Studio / Mac mini)
                        Hermes 3 8B local via Ollama  +  Claude API
                                            │
-                       ┌───────────────────┼───────────────────┐
-  Tool surface         ▼          ▼         ▼         ▼          ▼
-                   signalk    weather     tide   pilotbook   colregs   logbook
-                    -mcp       -mcp       -mcp     -mcp        -mcp      -mcp
-                      │          │          │        │           │         │
-  Data / vaults    SignalK   Open-Meteo  CHS +   pilotbook-  colregs-   sqlite
-                    bus       NDBC        NOAA    vault       vault
+                      ┌──────────┬─────────┼─────────┬──────────┬─────────┬─────────────┐
+  Tool surface        ▼          ▼         ▼         ▼          ▼         ▼             ▼
+                   signalk    weather     tide   pilotbook   colregs   logbook   vessel-knowledge
+                    -mcp       -mcp       -mcp     -mcp        -mcp      -mcp          -mcp
+                      │          │         │         │          │         │             │
+  Data / vaults    SignalK   Open-Meteo  CHS +   pilotbook-  colregs-   sqlite   vessel-knowledge-
+                    bus       NDBC        NOAA    vault       vault                   vault
 ```
 
 Each MCP server runs standalone and is independently useful — point your own agent
 at any one of them. The vaults are plain Markdown/GeoJSON the servers read at
-startup (`PILOTBOOK_VAULT_PATH`, `COLREGS_VAULT_PATH`).
+startup (`PILOTBOOK_VAULT_PATH`, `COLREGS_VAULT_PATH`, `VESSEL_KNOWLEDGE_VAULT_PATH`).
+vessel-knowledge-mcp also runs the loop in reverse: its build-time CLI pushes alarm-zone
+metadata *into* SignalK, so the bus raises notifications on its own and the agent only
+explains them.
 
 ## Getting started
 
