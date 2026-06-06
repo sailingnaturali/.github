@@ -36,11 +36,13 @@ Knowledge bases the MCP servers read from.
 
 ### SignalK Plugins
 
-Alarms don't wait for an agent — these run inside the SignalK server itself.
+Run inside the SignalK server itself — alarms and data feeds that don't wait for an
+agent. Published on npm under [@sailingnaturali](https://www.npmjs.com/org/sailingnaturali).
 
-| Repo | What it does |
-|------|-------------|
-| [signalk-ntfy-relay](https://github.com/sailingnaturali/signalk-ntfy-relay) | Push SignalK notifications (alarms) straight to your phone via [ntfy](https://ntfy.sh) — zero dependencies, edge-triggered, severity-aware. On npm as [`signalk-ntfy-relay`](https://www.npmjs.com/package/signalk-ntfy-relay) |
+| Repo | npm | What it does |
+|------|-----|-------------|
+| [signalk-ntfy-relay](https://github.com/sailingnaturali/signalk-ntfy-relay) | [`@sailingnaturali/signalk-ntfy-relay`](https://www.npmjs.com/package/@sailingnaturali/signalk-ntfy-relay) | Push SignalK notifications (alarms) straight to your phone via [ntfy](https://ntfy.sh) — zero dependencies, edge-triggered, severity-aware |
+| [signalk-currents](https://github.com/sailingnaturali/signalk-currents) | [`@sailingnaturali/signalk-currents`](https://www.npmjs.com/package/@sailingnaturali/signalk-currents) | Publish CHS/NOAA tidal-current predictions to SignalK — interpolated `environment.current` at the vessel plus a `/currents` slack/flood/ebb event series, for a configured station list |
 
 ### Agents
 
