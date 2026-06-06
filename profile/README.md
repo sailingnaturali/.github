@@ -34,6 +34,14 @@ Knowledge bases the MCP servers read from.
 | `pilotbook-vault` *(private)* | Anchorage knowledge for pilotbook-mcp — 673 anchorages across 7 SalishSeaPilot books, with exposed-sector data and source page back-links. Kept private: the source pilot books are copyrighted |
 | `vessel-knowledge-vault` *(private)* | Equipment cards for vessel-knowledge-mcp — per-make/model spec cards extracted from manuals (Bellmarine drives, Victron Cerbo, watermaker), with zone bands in SignalK canonical SI units. Kept private: the source manuals are copyrighted |
 
+### SignalK Plugins
+
+Alarms don't wait for an agent — these run inside the SignalK server itself.
+
+| Repo | What it does |
+|------|-------------|
+| [signalk-ntfy-relay](https://github.com/sailingnaturali/signalk-ntfy-relay) | Push SignalK notifications (alarms) straight to your phone via [ntfy](https://ntfy.sh) — zero dependencies, edge-triggered, severity-aware. On npm as [`signalk-ntfy-relay`](https://www.npmjs.com/package/signalk-ntfy-relay) |
+
 ### Agents
 
 | Repo | What it does |
@@ -89,4 +97,8 @@ server is a `uv`-runnable Python package with its own test suite.
 
 ---
 
-Built in public. MIT licensed. Show the receipts.
+Built in public. MIT licensed. Show the receipts. The build log lives on the
+[engineering blog](https://engineering.sailingnaturali.com)
+([source](https://github.com/sailingnaturali/engineering)), and the main site
+at [sailingnaturali.com](https://sailingnaturali.com)
+([source](https://github.com/sailingnaturali/web)).
