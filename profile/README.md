@@ -4,7 +4,7 @@ A tech exec uses AI to build the kind of business AI can't deliver.
 
 All-electric catamaran charter operation in the Pacific Northwest — Gulf Islands and San Juan Islands. AI runs the operations. Humans deliver the experience.
 
-📺 [sailingnaturali.com](https://sailingnaturali.com) · [@sailingnaturali](https://www.youtube.com/@sailingnaturali) on YouTube · [@sailingnaturali](https://www.instagram.com/sailingnaturali) on Instagram · [@sailingnaturali](https://www.tiktok.com/@sailingnaturali) on TikTok · [sailingnaturali](https://sailingnaturali.substack.com) on Substack
+📺 [@sailingnaturali](https://www.youtube.com/@sailingnaturali) on YouTube · [sailingnaturali](https://sailingnaturali.substack.com) on Substack · [sailingnaturali.com](https://sailingnaturali.com) · [@sailingnaturali](https://www.instagram.com/sailingnaturali) on Instagram · [@sailingnaturali](https://www.tiktok.com/@sailingnaturali) on TikTok
 
 ---
 
