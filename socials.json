@@ -1,0 +1,8 @@
+{
+  "_comment": "Canonical Sailing Naturali social/link list. Surfaces that must stay in sync: profile/README.md (this repo), web/src/lib/site.ts (siteConfig + JSON-LD sameAs + footer), engineering/_config.yml (social_links). Update all of them when this changes.",
+  "website": "https://sailingnaturali.com",
+  "youtube": "https://www.youtube.com/@sailingnaturali",
+  "instagram": "https://www.instagram.com/sailingnaturali",
+  "tiktok": "https://www.tiktok.com/@sailingnaturali",
+  "substack": "https://sailingnaturali.substack.com"
+}
