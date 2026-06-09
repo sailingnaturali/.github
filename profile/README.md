@@ -23,6 +23,7 @@ On-boat AI agent system — Navigator, Engineer, Logbook — built on the Claude
 | [colregs-mcp](https://github.com/sailingnaturali/colregs-mcp) | Navigation rules of the road — resolve the regime by GPS, look up rules, and check lights/shapes compliance |
 | [logbook-mcp](https://github.com/sailingnaturali/logbook-mcp) | The ship's log as agent tools — voice-marked moments and day reads over the [signalk-logbook](https://github.com/meri-imperiumi/signalk-logbook) plugin, with USCG/TC sea-time export on the roadmap |
 | [vessel-knowledge-mcp](https://github.com/sailingnaturali/vessel-knowledge-mcp) | Turn equipment manuals into alarm zones and equipment lookups — ingests PDFs into a card vault, pushes zone bands into SignalK so it raises notifications autonomously, then explains them in plain language |
+| [outstations-mcp](https://github.com/sailingnaturali/outstations-mcp) | Find and overnight-rank yacht-club outstations — RVYC member moorage with size, rafting, and booking rules, ranked against the forecast by reusing pilotbook-mcp's anchorage scorer |
 
 ### Vaults
 
@@ -70,14 +71,14 @@ servers, reasons over it, and speaks back through Home Assistant.
   Agent runtime      Hermes Agent (Mac Studio)
                        Claude API (Sonnet) — local model deferred
                                            │
-                      ┌──────────┬─────────┼──────────┬──────────┬─────────┬────────────┐
-  Tool surface        ▼          ▼         ▼          ▼          ▼         ▼            ▼
-                   signalk    weather  currents  pilotbook   colregs   logbook   vessel-knowledge
-                    -mcp       -mcp      -mcp      -mcp        -mcp      -mcp          -mcp
-                      │          │         │          │          │         │            │
-  Data / vaults    SignalK   Open-Meteo  CHS +   pilotbook-  colregs-  signalk-  vessel-knowledge-
-                    bus       NDBC        NOAA    vault       vault    logbook         vault
-                                                                      (on boat)
+                     ┌──────────┬──────────┼──────────┬──────────┬─────────┬──────────────┬───────────────┐
+  Tool surface       ▼          ▼          ▼          ▼          ▼         ▼              ▼               ▼
+                  signalk    weather   currents   pilotbook   colregs   logbook   vessel-knowledge   outstations
+                   -mcp       -mcp       -mcp       -mcp       -mcp      -mcp           -mcp            -mcp
+                     │          │          │          │          │         │              │               │
+  Data / vaults   SignalK  Open-Meteo    CHS +   pilotbook-  colregs-  signalk-   vessel-knowledge-   RVYC data
+                    bus       NDBC       NOAA       vault      vault    logbook         vault         (bundled)
+                                                                       (on boat)
 ```
 
 Each MCP server runs standalone and is independently useful — point your own agent
