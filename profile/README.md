@@ -19,7 +19,7 @@ On-boat AI agent system — Navigator, Engineer, Logbook — built on the Claude
 | [signalk-mcp](https://github.com/sailingnaturali/signalk-mcp) | Read live vessel data from SignalK — wind, depth, position, battery, route — with path discovery and under-keel clearance |
 | [weather-mcp](https://github.com/sailingnaturali/weather-mcp) | Marine wind, swell, and buoy observations — Open-Meteo + Stormglass + NDBC |
 | [currents-mcp](https://github.com/sailingnaturali/currents-mcp) | Tidal-gate slack windows for PNW passages — CHS (BC) + NOAA (US) current predictions |
-| [pilotbook-mcp](https://github.com/sailingnaturali/pilotbook-mcp) | Rank the most comfortable overnight anchorage by joining pilot-book exposure against the forecast |
+| [pilotbook-mcp](https://github.com/sailingnaturali/pilotbook-mcp) | Rank the most comfortable overnight anchorage by joining pilot-book exposure against the forecast — and search anchorages in plain language ("quiet spot to wait out a southerly with a beach") via on-device hybrid retrieval |
 | [colregs-mcp](https://github.com/sailingnaturali/colregs-mcp) | Navigation rules of the road — resolve the regime by GPS, look up rules, and check lights/shapes compliance |
 | [logbook-mcp](https://github.com/sailingnaturali/logbook-mcp) | The ship's log as agent tools — voice-marked moments and day reads over the [signalk-logbook](https://github.com/meri-imperiumi/signalk-logbook) plugin, with USCG/TC sea-time export on the roadmap |
 | [vessel-knowledge-mcp](https://github.com/sailingnaturali/vessel-knowledge-mcp) | Turn equipment manuals into alarm zones and equipment lookups — ingests PDFs into a card vault, pushes zone bands into SignalK so it raises notifications autonomously, then explains them in plain language |
@@ -53,6 +53,7 @@ The ship's log itself runs here too: [meri-imperiumi/signalk-logbook](https://gi
 | Repo | What it does |
 |------|-------------|
 | [naturali-agents](https://github.com/sailingnaturali/naturali-agents) | Hermes Agent skills for Navigator, Engineer, and Logbook — prompts, bridge scripts, and HA voice integration |
+| [vault-search](https://github.com/sailingnaturali/vault-search) | Local-first hybrid search over the Markdown vaults — BM25 + on-device embeddings (fastembed/ONNX) in one SQLite file, RRF-fused. The retrieval engine behind pilotbook-mcp's plain-language anchorage search |
 | [claude-skills](https://github.com/sailingnaturali/claude-skills) | Claude Code skills from this build — `/plugin marketplace add sailingnaturali/claude-skills` |
 
 ---
