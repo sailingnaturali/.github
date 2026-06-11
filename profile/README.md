@@ -23,7 +23,7 @@ On-boat AI agent system — Navigator, Engineer, Logbook — built on the Claude
 | [colregs-mcp](https://github.com/sailingnaturali/colregs-mcp) | Navigation rules of the road — resolve the regime by GPS, look up rules, and check lights/shapes compliance |
 | [logbook-mcp](https://github.com/sailingnaturali/logbook-mcp) | The ship's log as agent tools — voice-marked moments and day reads over the [signalk-logbook](https://github.com/meri-imperiumi/signalk-logbook) plugin, with USCG/TC sea-time export on the roadmap |
 | [vessel-knowledge-mcp](https://github.com/sailingnaturali/vessel-knowledge-mcp) | Turn equipment manuals into alarm zones and equipment lookups — ingests PDFs into a card vault, pushes zone bands into SignalK so it raises notifications autonomously, then explains them in plain language |
-| [outstations-mcp](https://github.com/sailingnaturali/outstations-mcp) | Find and overnight-rank yacht-club outstations — RVYC member moorage with size, rafting, and booking rules, ranked against the forecast by reusing pilotbook-mcp's anchorage scorer |
+| [club-moorage-mcp](https://github.com/sailingnaturali/club-moorage-mcp) | Find and overnight-rank yacht-club outstations — RVYC member moorage with size, rafting, and booking rules, ranked against the forecast by reusing pilotbook-mcp's anchorage scorer |
 
 ### Vaults
 
