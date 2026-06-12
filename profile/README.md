@@ -45,6 +45,8 @@ agent. Published on npm under [@sailingnaturali](https://www.npmjs.com/org/saili
 | [signalk-ntfy-relay](https://github.com/sailingnaturali/signalk-ntfy-relay) | [`@sailingnaturali/signalk-ntfy-relay`](https://www.npmjs.com/package/@sailingnaturali/signalk-ntfy-relay) | Push SignalK notifications (alarms) straight to your phone via [ntfy](https://ntfy.sh) — zero dependencies, edge-triggered, severity-aware |
 | [signalk-currents](https://github.com/sailingnaturali/signalk-currents) | [`@sailingnaturali/signalk-currents`](https://www.npmjs.com/package/@sailingnaturali/signalk-currents) | Publish CHS/NOAA tidal-current predictions to SignalK — interpolated `environment.current` at the vessel plus a `/currents` slack/flood/ebb event series, for a configured station list |
 | [signalk-depth-offsets](https://github.com/sailingnaturali/signalk-depth-offsets) | [`@sailingnaturali/signalk-depth-offsets`](https://www.npmjs.com/package/@sailingnaturali/signalk-depth-offsets) | Derive `environment.depth.belowKeel` and `belowSurface` from a DBT-only sounder using measured transducer offsets — zero dependencies |
+| [signalk-dsc](https://github.com/sailingnaturali/signalk-dsc) | [`@sailingnaturali/signalk-dsc`](https://www.npmjs.com/package/@sailingnaturali/signalk-dsc) | Receive, log, and alert on DSC (VHF digital selective calling) calls — distress, urgency, safety, routine — from NMEA 0183 (`$CDDSC`/`$CDDSE`) and NMEA 2000 (PGN 129808) |
+| [signalk-journey-replay](https://github.com/sailingnaturali/signalk-journey-replay) | [`@sailingnaturali/signalk-journey-replay`](https://www.npmjs.com/package/@sailingnaturali/signalk-journey-replay) | Replay published voyage data ([journey-data](https://github.com/sailingnaturali/journey-data) archives) on any SignalK server — download a trip, press play, timestamps rebased to now |
 
 The ship's log itself runs here too: [meri-imperiumi/signalk-logbook](https://github.com/meri-imperiumi/signalk-logbook)
 — adopted, not rebuilt. Use existing tools before building your own.
@@ -55,6 +57,7 @@ The ship's log itself runs here too: [meri-imperiumi/signalk-logbook](https://gi
 |------|-------------|
 | [naturali-agents](https://github.com/sailingnaturali/naturali-agents) | Hermes Agent skills for Navigator, Engineer, and Logbook — prompts, bridge scripts, and HA voice integration |
 | [vault-search](https://github.com/sailingnaturali/vault-search) | Local-first hybrid search over the Markdown vaults — BM25 + on-device embeddings (fastembed/ONNX) in one SQLite file, RRF-fused. The retrieval engine behind pilotbook-mcp's plain-language anchorage search |
+| [journey-data](https://github.com/sailingnaturali/journey-data) | Real voyage data from S/V Naturali as SignalK delta archives — capture, scrub, and publish CLI; the archives signalk-journey-replay plays back |
 | [claude-skills](https://github.com/sailingnaturali/claude-skills) | Claude Code skills from this build — `/plugin marketplace add sailingnaturali/claude-skills` |
 
 ---
