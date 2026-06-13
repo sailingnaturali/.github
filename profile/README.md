@@ -33,7 +33,7 @@ Knowledge bases the MCP servers read from.
 |------|-------------|
 | [colregs-vault](https://github.com/sailingnaturali/colregs-vault) | Navigation-rules content for colregs-mcp — rule prose, a curated requirements decision table, and PNW regime polygons. Public because the sources are reproducible public-domain law |
 | `pilotbook-vault` *(private)* | Anchorage knowledge for pilotbook-mcp — 673 anchorages across 7 SalishSeaPilot books, with exposed-sector data and source page back-links. Kept private: the source pilot books are copyrighted |
-| `vessel-knowledge-vault` *(private)* | Equipment cards for vessel-knowledge-mcp — per-make/model spec cards extracted from manuals (Bellmarine drives, Victron Cerbo, watermaker), with zone bands in SignalK canonical SI units. Kept private: the source manuals are copyrighted |
+| `vessel-knowledge-vault` *(private)* | Equipment cards for vessel-knowledge-mcp — per-make/model spec cards extracted from manuals (propulsion drives, Victron Cerbo, watermaker), with zone bands in SignalK canonical SI units. Kept private: the source manuals are copyrighted |
 
 ### SignalK Plugins
 
@@ -48,9 +48,6 @@ agent. Published on npm under [@sailingnaturali](https://www.npmjs.com/org/saili
 | [signalk-dsc](https://github.com/sailingnaturali/signalk-dsc) | [`@sailingnaturali/signalk-dsc`](https://www.npmjs.com/package/@sailingnaturali/signalk-dsc) | Receive, log, and alert on DSC (VHF digital selective calling) calls — distress, urgency, safety, routine — from NMEA 0183 (`$CDDSC`/`$CDDSE`) and NMEA 2000 (PGN 129808) |
 | [signalk-journey-replay](https://github.com/sailingnaturali/signalk-journey-replay) | [`@sailingnaturali/signalk-journey-replay`](https://www.npmjs.com/package/@sailingnaturali/signalk-journey-replay) | Replay published voyage data ([journey-data](https://github.com/sailingnaturali/journey-data) archives) on any SignalK server — download a trip, press play, timestamps rebased to now |
 
-The ship's log itself runs here too: [meri-imperiumi/signalk-logbook](https://github.com/meri-imperiumi/signalk-logbook)
-— adopted, not rebuilt. Use existing tools before building your own.
-
 ### Agents & tooling
 
 | Repo | What it does |
@@ -59,6 +56,29 @@ The ship's log itself runs here too: [meri-imperiumi/signalk-logbook](https://gi
 | [vault-search](https://github.com/sailingnaturali/vault-search) | Local-first hybrid search over the Markdown vaults — BM25 + on-device embeddings (fastembed/ONNX) in one SQLite file, RRF-fused. The retrieval engine behind pilotbook-mcp's plain-language anchorage search |
 | [journey-data](https://github.com/sailingnaturali/journey-data) | Real voyage data from S/V Naturali as SignalK delta archives — capture, scrub, and publish CLI; the archives signalk-journey-replay plays back |
 | [claude-skills](https://github.com/sailingnaturali/claude-skills) | Claude Code skills from this build — `/plugin marketplace add sailingnaturali/claude-skills` |
+
+### What the boat runs on (adopted, not built)
+
+The rule here is **adopt before build** — the repos above exist only because nothing
+else filled the gap. Most of what makes this boat work is other people's open source:
+
+| Project | Role aboard |
+|---------|-------------|
+| [Signal K](https://github.com/SignalK/signalk-server) | The open marine data bus — every sensor, plugin, and agent reads and writes here |
+| [Home Assistant](https://www.home-assistant.io) | Voice in/out, dashboards, and automations — the crew-facing surface |
+| [Freeboard-SK](https://github.com/SignalK/freeboard-sk) | Chartplotter UI — renders the resource layers the plugins publish (currents, restricted areas, routes) |
+| [KIP](https://github.com/mxtommy/Kip) | Instrument displays over SignalK |
+| [signalk-logbook](https://github.com/meri-imperiumi/signalk-logbook) | The ship's log itself — logbook-mcp and signalk-dsc write to it rather than reinventing it |
+| [signalk-tides](https://github.com/openwatersio/signalk-tides) | Tide extremes at the vessel — we send patches upstream instead of forking |
+| [signalk-restricted-areas](https://github.com/dirkwa/signalk-restricted-areas) | ProtectedSeas marine-protected-area layers and geofence alerts — MPAs, rockfish conservation areas, whale slowdown zones |
+| [Eclipse Mosquitto](https://mosquitto.org) | The MQTT spine — alarms, intents, and voice events between boat, agent host, and Home Assistant |
+| [ntfy](https://ntfy.sh) | Push notifications to phones — the far end of signalk-ntfy-relay |
+| [Whisper](https://github.com/rhasspy/wyoming-faster-whisper) / [Piper](https://github.com/rhasspy/piper) | Speech-to-text and text-to-speech for the voice pipeline, both running locally |
+| [Ollama](https://github.com/ollama/ollama) | Local inference for small structured tasks — e.g. repairing model output into strict JSON |
+| [Tailscale](https://tailscale.com) | Remote access to boat and shore hosts — WireGuard without the key ceremony |
+
+When one of these falls short we file an issue or send a patch before writing a
+replacement. A new repo in the tables above is the last resort.
 
 ---
 
