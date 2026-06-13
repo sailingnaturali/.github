@@ -26,7 +26,7 @@ jobs:
       # Public repos that intentionally do NOT belong in the profile listing.
       IGNORE: ".github"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Diff public repos against profile README
         run: |
