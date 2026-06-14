@@ -66,8 +66,6 @@ else filled the gap. Most of what makes this boat work is other people's open so
 |---------|-------------|
 | [Signal K](https://github.com/SignalK/signalk-server) | The open marine data bus — every sensor, plugin, and agent reads and writes here |
 | [Home Assistant](https://www.home-assistant.io) | Voice in/out, dashboards, and automations — the crew-facing surface |
-| [Freeboard-SK](https://github.com/SignalK/freeboard-sk) | Chartplotter UI — renders the resource layers the plugins publish (currents, restricted areas, routes) |
-| [KIP](https://github.com/mxtommy/Kip) | Instrument displays over SignalK |
 | [signalk-logbook](https://github.com/meri-imperiumi/signalk-logbook) | The ship's log itself — logbook-mcp and signalk-dsc write to it rather than reinventing it |
 | [signalk-tides](https://github.com/openwatersio/signalk-tides) | Tide extremes at the vessel — we send patches upstream instead of forking |
 | [signalk-restricted-areas](https://github.com/dirkwa/signalk-restricted-areas) | ProtectedSeas marine-protected-area layers and geofence alerts — MPAs, rockfish conservation areas, whale slowdown zones |
