@@ -69,6 +69,7 @@ else filled the gap. Most of what makes this boat work is other people's open so
 | [Home Assistant](https://www.home-assistant.io) | Voice in/out, dashboards, and automations — the crew-facing surface |
 | [signalk-logbook](https://github.com/meri-imperiumi/signalk-logbook) | The ship's log itself — logbook-mcp and signalk-dsc write to it rather than reinventing it |
 | [signalk-tides](https://github.com/openwatersio/signalk-tides) | Tide extremes at the vessel — we send patches upstream instead of forking |
+| [openmeteo-provider-plugin](https://github.com/SignalK/openmeteo-provider-plugin) | Free [Open-Meteo](https://open-meteo.com) forecasts into SignalK's weather API — we contributed the marine waves & swell (`water.*`) the point forecast was missing |
 | [signalk-restricted-areas](https://github.com/dirkwa/signalk-restricted-areas) | ProtectedSeas marine-protected-area layers and geofence alerts — MPAs, rockfish conservation areas, whale slowdown zones |
 | [Eclipse Mosquitto](https://mosquitto.org) | The MQTT spine — alarms, intents, and voice events between boat, agent host, and Home Assistant |
 | [ntfy](https://ntfy.sh) | Push notifications to phones — the far end of signalk-ntfy-relay |
