@@ -55,6 +55,8 @@ agent. Published on npm under [@sailingnaturali](https://www.npmjs.com/org/saili
 |------|-------------|
 | [naturali-agents](https://github.com/sailingnaturali/naturali-agents) | Hermes Agent skills for Navigator, Engineer, and Logbook — prompts, bridge scripts, and HA voice integration |
 | [vault-search](https://github.com/sailingnaturali/vault-search) | Local-first hybrid search over the Markdown vaults — BM25 + on-device embeddings (fastembed/ONNX) in one SQLite file, RRF-fused. The retrieval engine behind pilotbook-mcp's plain-language anchorage search |
+| [marine-forecast](https://github.com/sailingnaturali/marine-forecast) | Shared Open-Meteo marine + wind forecast fetch, extracted from weather-mcp so it and pilotbook-mcp compose one forecast implementation instead of duplicating it |
+| [naturali-mcp-netutil](https://github.com/sailingnaturali/naturali-mcp-netutil) | Tiny shared network helpers for the MCP fleet — resolves `.local` mDNS hosts to IPv4 at the URL boundary so SignalK reads don't hang on macOS Happy-Eyeballs |
 | [journey-data](https://github.com/sailingnaturali/journey-data) | Real voyage data from S/V Naturali as SignalK delta archives — capture, scrub, and publish CLI; the archives signalk-journey-replay plays back |
 | [claude-skills](https://github.com/sailingnaturali/claude-skills) | Claude Code skills from this build — `/plugin marketplace add sailingnaturali/claude-skills` |
 
@@ -79,6 +81,15 @@ else filled the gap. Most of what makes this boat work is other people's open so
 
 When one of these falls short we file an issue or send a patch before writing a
 replacement. A new repo in the tables above is the last resort.
+
+### Travel storytelling
+
+Off the boat — the trip-content side. Standalone and useful on their own.
+
+| Repo | What it does |
+|------|-------------|
+| [flight-animator](https://github.com/sailingnaturali/flight-animator) | Animate multi-stop flight routes on a dark MapLibre map — great-circle arcs, animated trail, no server or sign-in. Built to screen-record and narrate for the Amsterdam boat-build trip videos · [flights.sailingnaturali.com](https://flights.sailingnaturali.com) |
+| [flighty-mcp](https://github.com/sailingnaturali/flighty-mcp) | Read-only MCP server exposing personal Flighty flight history as geo-ready legs (departure/arrival coordinates) — query by date, year, or flight number, and browse aggregate stats |
 
 ---
 
