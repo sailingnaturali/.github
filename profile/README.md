@@ -93,6 +93,14 @@ Off the boat — the trip-content side. Standalone and useful on their own.
 | [flight-animator](https://github.com/sailingnaturali/flight-animator) | Animate multi-stop flight routes on a dark MapLibre map — great-circle arcs, animated trail, no server or sign-in. Built to screen-record and narrate for the Amsterdam boat-build trip videos · [flights.sailingnaturali.com](https://flights.sailingnaturali.com) |
 | [flighty-mcp](https://github.com/sailingnaturali/flighty-mcp) | Read-only MCP server exposing personal Flighty flight history as geo-ready legs (departure/arrival coordinates) — query by date, year, or flight number, and browse aggregate stats |
 
+### Tides & currents
+
+Open, standalone — usable in any app or agent.
+
+| Repo | What it does |
+|------|-------------|
+| [slackwater-engine](https://github.com/sailingnaturali/slackwater-engine) | Pure-Swift offline harmonic tide & current engine — heights and the high/low turns for any minute, years ahead, with zero network. Faithful port of [openwaters/neaps](https://github.com/openwatersio/tide-predictor), validated against NOAA's own published predictions to a few minutes and centimetres. MIT |
+
 ---
 
 ## How it fits together
