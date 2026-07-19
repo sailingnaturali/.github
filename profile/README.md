@@ -32,6 +32,7 @@ Knowledge bases the MCP servers read from.
 | Repo | What it holds |
 |------|-------------|
 | [colregs-vault](https://github.com/sailingnaturali/colregs-vault) | Navigation-rules content for colregs-mcp — rule prose, a curated requirements decision table, and PNW regime polygons. Public because the sources are reproducible public-domain law |
+| [currents-vault](https://github.com/sailingnaturali/currents-vault) | Tidal-gate reference for currents-mcp — one file per PNW pass with CHS/NOAA station identity plus flood/ebb hazard notes (whirlpools, holes, sets), and a destination routing table. Public: station data is open government, hazards are paraphrased |
 | `pilotbook-vault` *(private)* | Anchorage knowledge for pilotbook-mcp — 673 anchorages across 7 SalishSeaPilot books, with exposed-sector data and source page back-links. Kept private: the source pilot books are copyrighted |
 | `vessel-knowledge-vault` *(private)* | Equipment cards for vessel-knowledge-mcp — per-make/model spec cards extracted from manuals (propulsion drives, Victron Cerbo, watermaker), with zone bands in SignalK canonical SI units. Kept private: the source manuals are copyrighted |
 
@@ -127,7 +128,9 @@ servers, reasons over it, and speaks back through Home Assistant.
 
 Each MCP server runs standalone and is independently useful — point your own agent
 at any one of them. The vaults are plain Markdown/GeoJSON the servers read at
-startup (`PILOTBOOK_VAULT_PATH`, `COLREGS_VAULT_PATH`, `VESSEL_KNOWLEDGE_VAULT_PATH`).
+startup (`PILOTBOOK_VAULT_PATH`, `COLREGS_VAULT_PATH`, `CURRENTS_VAULT_PATH`,
+`VESSEL_KNOWLEDGE_VAULT_PATH`). currents-mcp reads live currents from CHS/NOAA via
+signalk-currents and gate/hazard reference from currents-vault.
 vessel-knowledge-mcp also runs the loop in reverse: its build-time CLI pushes alarm-zone
 metadata *into* SignalK, so the bus raises notifications on its own and the agent only
 explains them.
