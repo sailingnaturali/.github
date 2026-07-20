@@ -101,6 +101,8 @@ Open, standalone — usable in any app or agent.
 | Repo | What it does |
 |------|-------------|
 | [slackwater-engine](https://github.com/sailingnaturali/slackwater-engine) | Pure-Swift offline harmonic tide & current engine — heights and the high/low turns for any minute, years ahead, with zero network. Faithful port of [openwaters/neaps](https://github.com/openwatersio/tide-predictor), validated against NOAA's own published predictions to a few minutes and centimetres. MIT |
+| [chs-constituents](https://github.com/sailingnaturali/chs-constituents) | Fit tidal-current harmonic constituents for Canadian (CHS) stations from IWLS predictions — out-of-sample validation, confidence tiering, per-gate training-window selection. A pipeline instead of a dataset: the CHS licence forbids redistributing derived data, so you run it yourself and offline prediction follows. MIT |
+| [current-stations](https://github.com/sailingnaturali/current-stations) | NOAA CO-OPS tidal-current station data ([`@sailingnaturali/current-stations`](https://www.npmjs.com/package/@sailingnaturali/current-stations)) — fetcher, extractor, schema, and the API's undocumented behaviour. The public-domain constituent source behind signalk-currents' offline fallback |
 
 ---
 
