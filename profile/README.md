@@ -10,7 +10,7 @@ All-electric catamaran charter operation in the Pacific Northwest — Gulf Islan
 
 ## Boat Agent Stack
 
-On-boat AI agent system — Navigator, Engineer, Logbook — built on the Claude API, wired to SignalK via MCP servers.
+On-boat AI agent system — Navigator, Engineer, Logbook — wired to the vessel through SignalK and MCP servers. The agents are the product; the runtime underneath is replaceable and has already been replaced once.
 
 ### MCP Servers
 
@@ -55,7 +55,7 @@ agent. Published on npm under [@sailingnaturali](https://www.npmjs.com/org/saili
 
 | Repo | What it does |
 |------|-------------|
-| [naturali-agents](https://github.com/sailingnaturali/naturali-agents) | Hermes Agent skills for Navigator, Engineer, and Logbook — prompts, bridge scripts, and HA voice integration |
+| [naturali-agents](https://github.com/sailingnaturali/naturali-agents) | Agent skills for Navigator, Engineer, and Logbook — shared persona, prompts, the Poseidon daemon, and HA voice integration |
 | [vault-search](https://github.com/sailingnaturali/vault-search) | Local-first hybrid search over the Markdown vaults — BM25 + on-device embeddings (fastembed/ONNX) in one SQLite file, RRF-fused. The retrieval engine behind pilotbook-mcp's plain-language anchorage search |
 | [marine-forecast](https://github.com/sailingnaturali/marine-forecast) | Shared Open-Meteo marine + wind forecast fetch, extracted from weather-mcp so it and pilotbook-mcp compose one forecast implementation instead of duplicating it |
 | [signalk-distress-core](https://github.com/sailingnaturali/signalk-distress-core) | Shared distress plumbing ([`@sailingnaturali/signalk-distress-core`](https://www.npmjs.com/package/@sailingnaturali/signalk-distress-core)) — event store, chart-marker builder, spoken/logbook rendering, and notifications — extracted from signalk-dsc so it and signalk-ais-distress share one implementation |
@@ -117,8 +117,8 @@ servers, reasons over it, and speaks back through Home Assistant.
   Interaction        Home Assistant
                        voice in ──MQTT──▶  │   ◀──MQTT── Piper TTS out
                                            ▼
-  Agent runtime      Hermes Agent (Mac Studio)
-                       Claude API (Sonnet) — local model deferred
+  Agent runtime      Poseidon daemon (Mac Studio)
+                       Claude today — local model when the boat can power it
                                            │
                      ┌──────────┬──────────┼──────────┬──────────┬─────────┬──────────────┬───────────────┐
   Tool surface       ▼          ▼          ▼          ▼          ▼         ▼              ▼               ▼
@@ -141,16 +141,16 @@ explains them.
 
 ## Getting started
 
-Start at **[naturali-agents](https://github.com/sailingnaturali/naturali-agents)** — it
-wires the MCP servers into a working agent and ships a mock SignalK server, so the whole
-loop runs on a laptop with no boat:
+Start at **[naturali-agents](https://github.com/sailingnaturali/naturali-agents)** — the
+agent skills, shared persona, and daemon that wire the MCP servers into a working crew.
+It ships a mock SignalK server, so the loop runs on a laptop with no boat:
 
 ```bash
 git clone https://github.com/sailingnaturali/naturali-agents
 cd naturali-agents
 python dev/mock-signalk.py            # serves a Boundary Pass scenario on :8765
 export SIGNALK_URL=http://localhost:8765
-hermes chat -s naturali/navigator     # ask the Navigator anything
+uv run scripts/briefing.py --dry-run  # real tides + mock vessel → the Navigator's morning prompt
 ```
 
 Each repo's README carries its own install, env vars, and tool surface. Every MCP
